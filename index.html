@@ -1,0 +1,79 @@
+<!-- https://comply.cookiepro.com/ OneTrust CMP Builder start -->
+<script src="https://cmp-cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-cmp-builder-version="1.8.0"
+ data-domain-script="center-center-default-eu-ot">
+</script>
+<script>
+	function OptanonWrapper() {addCmpBuilderFeatures();function addCmpBuilderFeatures() {var existingCmpFeaturesScript = document.getElementById('cmp-builder-features-script');if(!existingCmpFeaturesScript) {var cmpFeaturesScript = document.createElement('script'),script1 = document.getElementsByTagName('script')[0];cmpFeaturesScript.src = "https://cmp-cdn.cookielaw.org/consent/cmp-features/cmp-features.js";cmpFeaturesScript.setAttribute('id', 'cmp-builder-features-script');cmpFeaturesScript.async = false;cmpFeaturesScript.type = 'text/javascript';script1.parentNode.insertBefore(cmpFeaturesScript, script1);}}}
+</script>
+<!-- OneTrust CMP Builder end -->
+
+
+
+<!-- Kaltura player 
+sourced from official doc http://player.kaltura.com/docs/PlaylistVAST
+Subsitute 243342 with your partner id, 25975211 with your uiconf_id -->
+
+<script src="//cdnapisec.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/25975211/partner_id/243342">
+
+</script>
+<div id="kaltura_player_1614898010910" style="width:650px;height:365px;" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+	<!-- Search engine metadata, based on schema.org/VideoObject -->
+	<span itemprop="description" content="A dated advertisment for Folgers Coffee"></span>
+	<span itemprop="name" content="Folgers Coffee"></span>
+	<span itemprop="duration" content="60"></span>
+	<span itemprop="thumbnailUrl" content="http://cfvod.kaltura.com/p/243342/sp/24334200/thumbnail/entry_id/0_uka1msg4/version/100007"></span>
+	<span itemprop="width" content="650"></span>
+	<span itemprop="height" content="365"></span>
+</div>
+<script>
+
+var getConsentString  = '';
+var getConsentApply  = '';
+var smartVast =  'https://www.smartadserver.com/ac?siteid=339677&pgid=1223982&fmtid=29827&ab=1&tgt=&oc=1&out=vast3&ps=1&pb=0&visit=S&vcn=s&tmstp=[timestamp]'  
+
+// custom function to leverage  cmp consent string
+__tcfapi("getTCData", 2, (sasGetCS) => {
+
+	console.log('cmp status= '+sasGetCS.cmpStatus);
+;
+
+if (sasGetCS.gdprApplies == true ) {
+getConsentApply = '&gdpr=1';
+getConsentString = '&gdpr_consent='+sasGetCS.tcString;
+smartVast = smartVast+getConsentApply+getConsentString  
+console.log('smartvast final url '+ smartVast)
+
+}  
+  }
+    ) 
+
+  
+
+	kWidget.embed({
+		targetId: "kaltura_player_1614898010910",
+		wid: "_243342",
+		uiconf_id: "25975211",
+		entry_id: "0_uka1msg4",
+		flashvars: {
+			"playlistAPI": {
+				"containerPosition" : "left",
+				"layout" : "vertical",
+				"includeInLayout" : true,
+				"autoContinue" : true,
+				"autoPlay" : true, 
+				"loop" : false,
+				"onPage" : false, 
+				"kpl0Id" : "0_q79jh71b",
+				"kpl0Name" : "test 4 item playlist"
+			},
+			"vast": {
+				"prerollUrl" : smartVast ,
+				"numPreroll" : "1",
+				"preSequence" : "1",
+				"timeout" : "4",
+				"storeSession" : false,
+				"skipOffset" : "5"
+			}
+		}
+})
+</script>
