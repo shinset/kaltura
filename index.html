@@ -27,29 +27,27 @@ Subsitute 243342 with your partner id, 25975211 with your uiconf_id -->
 </div>
 <script>
 
-var getConsentString  = '';
-var getConsentApply  = '';
-var smartVast =  'https://www.smartadserver.com/ac?siteid=339677&pgid=1223982&fmtid=29827&ab=1&tgt=&oc=1&out=vast3&ps=1&pb=0&visit=S&vcn=s&tmstp=[timestamp]'  
+var getConsentString ;
+var getConsentApply ;
+var smartVast =  'https://www.smartadserver.com/ac?siteid=339677&pgid=1223982&fmtid=29827&ab=1&tgt=&oc=1&out=vast3&ps=1&pb=0&visit=S&vcn=s&tmstp=[timestamp]';
 
 
 var smartcs = (tcData, success) => {
   if(success && tcData.eventStatus === 'tcloaded') {
     // do something with tcData.tcString
-    console.log("cmp string "+tcData.tcString)
-    // remove the ourself to not get called more than once
+
     __tcfapi('removeEventListener', 2, (success) => {
       if(success) {
-        // oh good...
-getConsentApply = '&gdpr=1';
-getConsentString = '&gdpr_consent='+sasGetCS.tcString;
-smartVast = smartVast+getConsentApply+getConsentString  
-console.log('smartvast final url '+ smartVast)
+        // oh good... 
+
       }
-    }, tcData.listenerId);
+    }, tcData.listenerId); 
   } else {
-    // do something else
+    // do something else  *getConsentApply = '&gdpr=1';
+getConsentString = '&gdpr_consent='+tcData.tcString;
+smartVast = smartVast+getConsentApply+getConsentString ;
   }
-}
+};
 __tcfapi('addEventListener', 2, smartcs);
   
 
@@ -72,7 +70,7 @@ __tcfapi('addEventListener', 2, smartcs);
 			},
 			"vast": {
 				"prerollUrl" : smartVast ,//  put here adtagurl   
-				"numPreroll" : "1",
+				"numPreroll" : "1", 
 				"preSequence" : "1",
 				"timeout" : "4",
 				"storeSession" : false,
@@ -80,4 +78,4 @@ __tcfapi('addEventListener', 2, smartcs);
 			}
 		}
 })
-</script>
+</script>  
