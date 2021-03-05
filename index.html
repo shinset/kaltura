@@ -28,26 +28,36 @@ Subsitute 243342 with your partner id, 25975211 with your uiconf_id -->
 
 
 <script>
+	//create global variable for gdpr signal
+var getConsentString  = '';
+var getConsentApply  = '';
+var getAddtlConsent = '';
+var smartVast = 'https://www.smartadserver.com/ac?siteid=339677&pgid=1223982&fmtid=29827&ab=1&tgt=&oc=1&out=vast3&ps=1&pb=0&visit=S&vcn=s&tmstp=[timestamp]';
 
-// lets  Create some global variable to reuse for our hack
-var getConsentString = '' ; // will host gdpr_consent param
-var getConsentApply = '' ; // will host gdpr_apply param
-var smartVast = 'https://www.smartadserver.com/ac?siteid=339677&pgid=1223982&fmtid=29827&ab=1&tgt=&oc=1&out=vast3&ps=1&pb=0&visit=S&vcn=s&tmstp=[timestamp]'; //vastag url
- 
+// call the cmp 
+__tcfapi("addEventListener", 2, function (tcData, success) {
+            if (success) {
+                const listenerId = tcData.listenerId;
+                const eventStatus = tcData.eventStatus;
+                if (!eventStatus && tcData.gdprApplies) {
+                    return;
+                }
+                if (eventStatus === "tcloaded" ) {
 
-__tcfapi("getTCData", 2, (sasGetCS) => {
+getConsentApply =   '&gdpr=1'
+getConsentString =  '&gdpr_consent='+sasGetCS.tcString
+getAddtlConsent =   '&addtl_consent='+sasGetCS.addtlConsent
+smartVast = smartVast+getConsentApply+getConsentString+getAddtlConsent
 
-	console.log(sasGetCS);
+                        __tcfapi("removeEventListener", 2, () => {}, listenerId);
+                        return;
+                    
+                }
+            }
+        });
 
-if (sasGetCS.eventStatus === 'tcloaded' ) {
-getConsentApply = 	'&gdpr=1'
-getConsentString =  '&gdpr_consent='+sasGetCS.tcString;
-smartVast = smartVast+getConsentApply+getConsentString;
-console.log('adtag url '+ smartVast )
-} 
-  }
-    )
 
+	
 
 
 	kWidget.embed({
