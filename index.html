@@ -13,9 +13,8 @@
 sourced from official doc http://player.kaltura.com/docs/PlaylistVAST
 Subsitute 243342 with your partner id, 25975211 with your uiconf_id -->
 
-<script src="//cdnapisec.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/25975211/partner_id/243342">
+<script src="//cdnapisec.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/25975211/partner_id/243342"></script>
 
-</script>
 <div id="kaltura_player_1614898010910" style="width:650px;height:365px;" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 	<!-- Search engine metadata, based on schema.org/VideoObject -->
 	<span itemprop="description" content="A dated advertisment for Folgers Coffee"></span>
@@ -25,29 +24,40 @@ Subsitute 243342 with your partner id, 25975211 with your uiconf_id -->
 	<span itemprop="width" content="650"></span>
 	<span itemprop="height" content="365"></span>
 </div>
+
+
+
 <script>
 
-var getConsentString ;
-var getConsentApply ;
-var smartVast =  'https://www.smartadserver.com/ac?siteid=339677&pgid=1223982&fmtid=29827&ab=1&tgt=&oc=1&out=vast3&ps=1&pb=0&visit=S&vcn=s&tmstp=[timestamp]';
+// lets  Create some global variable to reuse for our hack
+var getConsentString = '' ; // will host gdpr_consent param
+var getConsentApply = '' ; // will host gdpr_apply param
+var smartVast = 'https://www.smartadserver.com/ac?siteid=339677&pgid=1223982&fmtid=29827&ab=1&tgt=&oc=1&out=vast3&ps=1&pb=0&visit=S&vcn=s&tmstp=[timestamp]'; //vastag url
+ 
 
-
+// use tcf framework for consent string
 var smartcs = (tcData, success) => {
   if(success && tcData.eventStatus === 'tcloaded') {
     // do something with tcData.tcString
+getConsentApply = '&gdpr=1';
 
-    __tcfapi('removeEventListener', 2, (success) => {
+getConsentString = '&gdpr_consent='+tcData.tcString;
+
+smartVast = smartVast+getConsentApply+getConsentString ;
+
+    // remove the event listner now i
+      __tcfapi('removeEventListener', 2, (success) => {
       if(success) {
         // oh good... 
 
       }
     }, tcData.listenerId); 
   } else {
-    // do something else  *getConsentApply = '&gdpr=1';
-getConsentString = '&gdpr_consent='+tcData.tcString;
-smartVast = smartVast+getConsentApply+getConsentString ;
+    // do something else 
   }
 };
+
+
 __tcfapi('addEventListener', 2, smartcs);
   
 
